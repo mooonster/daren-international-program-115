@@ -1,0 +1,4 @@
+Material Symbols Outlined
+Copyright 2026 Google LLC.
+Licensed under the Apache License, Version 2.0. See Material-Symbols-LICENSE.txt.
+Font obtained from Google Fonts. Upstream: https://github.com/google/material-design-icons
