@@ -1,0 +1,50 @@
+/* Constrain only decorative motion layers, never the document scroll area. */
+.hero-visual{overflow:hidden;overflow:clip;isolation:isolate}
+.marquee{transform:none}
+.hero-copy,.hero-visual,.section-heading>*,.stat,.admission-card,.curriculum-shell,.course-content,.course-columns>*,.language-copy,.language-schedule,.experience-card,.path-content>*,.voice-content>*,.closing-layout>*{min-width:0;max-width:100%}
+.admission-card h3,.school-chinese,.program,.program-en,.course-list span,.path-content h3,.voice-tabs button{overflow-wrap:anywhere}
+.course-list span{max-width:100%;min-width:0}
+.material-symbols-outlined{width:1em;height:1em;flex-shrink:0;text-align:center}
+.path-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:620px){
+ .hero-visual{padding:24px 20px}
+ .visual-caption{top:3px;left:20px}
+ .year-stamp{right:1px;top:7px}
+ .label-academic{left:0}
+ .label-world{right:0;bottom:5px}
+ .visual-asterisk{left:0;bottom:0}
+ .voice-tabs{gap:12px}
+ .voice-tabs button{min-width:0;flex:1}
+ .path-checklist{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .path-checklist li{min-width:0}
+ .grade-tabs button{min-width:0}
+ .friday{min-width:0;flex-wrap:wrap}
+ .schedule-line>div{min-width:0}
+ .stats-note{min-width:0}
+}
+
+/* Keep Material Symbols from inheriting the numbered pillar label's Arial font. */
+.pillar-top .pillar-icon{font-family:"Material Symbols Outlined";font-style:normal;font-weight:400;font-size:45px;line-height:1;letter-spacing:normal}
+@media(max-width:620px){.pillar-top .pillar-icon{font-size:36px}}
+
+/* Keep unloaded icon ligature text inside each existing 1em icon slot. */
+span.material-symbols-outlined{overflow:hidden;line-height:1}
+/* Separate the photo-expand circle from the icon glyph's 1em slot. */
+.expand-mark>.material-symbols-outlined{display:block;font-size:20px;line-height:1}
+@media(max-width:620px){.expand-mark>.material-symbols-outlined{font-size:18px}}
+/* The timetable can scroll locally without widening the page or dialog. */
+#schedule-dialog{width:min(1060px,calc(100vw - 32px));max-width:calc(100vw - 32px)}
+.schedule-dialog-body{padding:18px 22px 24px;min-width:0;max-width:100%}
+.schedule-scroll-hint{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.7}
+.timetable-scroll{width:100%;max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-inline:contain;border:1px solid var(--line);border-radius:4px}
+.full-timetable{width:100%;min-width:900px;border-collapse:separate;border-spacing:0;table-layout:fixed;text-align:center;font-family:Arial,"Noto Sans CJK TC",sans-serif;font-size:14px;line-height:1.55}
+.full-timetable caption{padding:15px 18px;background:var(--pale);color:var(--navy);font-size:18px;font-weight:700;text-align:left;caption-side:top}
+.full-timetable .period-column{width:64px}.full-timetable .time-column{width:118px}
+.full-timetable th,.full-timetable td{padding:15px 10px;vertical-align:middle;white-space:normal;overflow-wrap:break-word;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.full-timetable th:last-child,.full-timetable td:last-child{border-right:0}.full-timetable tbody tr:last-child>*{border-bottom:0}
+.full-timetable thead th{background:var(--navy);color:#fff;font-weight:600;font-size:13px}
+.full-timetable tbody th{position:sticky;left:0;z-index:1;background:#f5f9fd;color:var(--navy);font-size:19px;font-weight:600}
+.full-timetable thead th:first-child{position:sticky;left:0;z-index:2}
+.full-timetable .course-ielts{background:#eef7ff}.full-timetable .course-world{background:#fff}.full-timetable .course-sat{background:#e7f2fd}.full-timetable .course-volunteer{background:#d4eaff;color:var(--navy)}
+.timetable-course,.timetable-floor{display:block}.timetable-floor{margin-top:3px;color:var(--muted);font-size:12px}.timetable-time{white-space:nowrap!important;color:var(--navy);font-variant-numeric:tabular-nums}
+@media(max-width:620px){#schedule-dialog .dialog-head h2{font-size:14px}.schedule-dialog-body{padding:14px 12px 18px}.schedule-scroll-hint{font-size:12px}.full-timetable caption{font-size:16px}}
