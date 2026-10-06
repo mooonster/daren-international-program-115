@@ -86,7 +86,7 @@ initializeInfiniteMarquee();
 function initializeStudentCarousel(){
  const region=document.querySelector('#kv-carousel');if(!region)return;
  const slides=[...region.querySelectorAll('.kv-slide')],dots=[...region.querySelectorAll('[data-kv-index]')];
- const previous=region.querySelector('#kv-prev'),next=region.querySelector('#kv-next'),toggle=region.querySelector('#kv-toggle'),status=region.querySelector('#kv-status');
+ const toggle=region.querySelector('#kv-toggle'),status=region.querySelector('#kv-status');
  const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
  const hoverCapable=window.matchMedia('(hover: hover)');
  let current=0,requested=0,requestId=0,timer=null,userPaused=motion.matches,hovering=false;
@@ -104,7 +104,6 @@ function initializeStudentCarousel(){
   dots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===target)));
   current=target;status.textContent=manual?`第${target+1}位，共${slides.length}位：${slides[target].dataset.school}`:'';schedule();
  }
- previous.addEventListener('click',()=>show(requested-1,true));next.addEventListener('click',()=>show(requested+1,true));
  dots.forEach((dot,i)=>dot.addEventListener('click',()=>show(i,true)));
  toggle.addEventListener('click',()=>{userPaused=!userPaused;if(!userPaused)hovering=false;schedule()});
  region.addEventListener('mouseenter',()=>{if(hoverCapable.matches){hovering=true;clearTimer()}});region.addEventListener('mouseleave',()=>{hovering=false;schedule()});

@@ -83,7 +83,7 @@ span.material-symbols-outlined{overflow:hidden;line-height:1}
 .kv-caption strong{display:block;font:700 14px/1.35 Arial,sans-serif;letter-spacing:.2px;color:var(--navy)}
 .kv-caption p{margin:4px 0 0;font-size:13px;line-height:1.6;color:var(--muted)}
 @keyframes kv-slide-reveal{from{opacity:0}to{opacity:1}}
-.kv-controls{position:absolute;top:calc(100% + 12px);left:0;right:0;z-index:5;display:grid;grid-template-columns:auto minmax(0,1fr)auto auto;gap:8px;align-items:center}
+.kv-controls{position:absolute;top:calc(100% + 12px);left:0;right:0;z-index:5;display:flex;justify-content:center;gap:14px;align-items:center}
 .kv-controls>button{min-height:38px;padding:7px 9px;background:white;color:var(--navy);border:1px solid var(--line);border-radius:4px;font-size:12px;line-height:1.4;white-space:nowrap}
 .kv-controls>button:hover{background:var(--pale);border-color:var(--blue)}.kv-controls>button:disabled{cursor:default;color:var(--muted);opacity:.75}
 .kv-dots{display:flex;justify-content:center;align-items:center;gap:5px;min-width:0}.kv-dots button{display:grid;place-items:center;width:20px;height:34px;padding:0;background:none}.kv-dots span{display:block;width:7px;height:7px;border-radius:50%;background:#a8c7e4;transition:background .2s,transform .2s}.kv-dots button[aria-current=true] span{background:var(--navy);transform:scale(1.3)}
