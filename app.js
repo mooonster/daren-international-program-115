@@ -30,7 +30,7 @@ const pathways={
  '12':{title:'Cultural<br>Adaptation',sub:'完成申請、確認選擇，也為海外的學習與生活做好準備。',items:['確認申請學校','繳交申請資料','指導英文面試','追蹤申請結果','建議就讀學校','預備留學生活']}
 };
 const voices={
- uc:`<div class="voice-content uc-photo-story"><div class="uc-story-copy"><span class="quote-mark" aria-hidden="true">“</span><h3>同時兼顧多項課業，<br>也能從容面對全新的節奏。</h3><p>學姊分享，UC Davis 的 Quarter 學制每學季只有 10 週，課程進度很快。國際班的寫作課訓練，幫助她到美國後適應大量功課與 project，在短時間內完成有水準的作業。</p><p class="voice-attribution">UC DAVIS · 大一學姊分享摘要</p></div><aside class="voice-fact uc-fact-inline"><strong>55</strong><span>大一修得學分</span><p>「同時兼顧多項課業」<br>累積心態、抗壓性與寫作能力。</p><small>依學姊個人經驗，非一般修課標準</small></aside><img class="voice-photo voice-photo-uc" src="assets/image10.jpg" alt="UC Davis 學姊分享中的校園樂隊照片" width="2500" height="1667" loading="lazy"></div>`,
+ uc:`<div class="voice-content uc-photo-story"><div class="uc-story-copy"><span class="quote-mark" aria-hidden="true">“</span><h3>同時兼顧多項課業，<br>也能從容面對全新的節奏。</h3><p>學姊分享，UC Davis 的 Quarter 學制每學季只有 10 週，課程進度很快。國際班的寫作課訓練，幫助她到美國後適應大量功課與 project，在短時間內完成有水準的作業。</p><p class="voice-attribution">UC DAVIS · 大一學姊分享摘要</p></div><aside class="voice-fact uc-fact-inline"><strong>55</strong><span>大一修得學分</span><p>「同時兼顧多項課業」 累積心態、抗壓性與寫作能力。 <small>依學姊個人經驗，非一般修課標準</small></p></aside><img class="voice-photo voice-photo-uc" src="assets/image10.jpg" alt="UC Davis 學姊分享中的校園樂隊照片" width="2500" height="1667" loading="lazy"></div>`,
  rutgers:`<div class="voice-content"><div><span class="quote-mark" aria-hidden="true">“</span><h3>雙軌制打下的學科基礎，<br>到了大學，真的很有用。</h3><p>就讀 Rutgers Business School 的學姊特別提到數學基礎，以及 AP 課程帶來的準備。她也分享，修習 AP 課程有助於大學優先選課，增加選到心儀課程的機會。</p><p class="voice-highlight">第一學期獲得 Dean’s Letter（院長嘉許名單）。成績為全校前 10%–15%，並登錄於正式成績單。</p><p class="voice-attribution">RUTGERS BUSINESS SCHOOL · 學姊分享摘要</p></div><img class="voice-photo" src="assets/image11.jpg" alt="Rutgers 學姊照片" width="3129" height="5562" loading="lazy"></div>`,
  wisconsin:`<div class="voice-content"><div><span class="quote-mark" aria-hidden="true">“</span><h3>更獨立、更自信，<br>也用更開放的心態看世界。</h3><p>從 Wisconsin–Madison 商學院畢業的學姊回憶，AP 課與語言課讓她在多元文化與想法中學習。國際班經常以英文溝通與聽課的經驗，幫助她快速適應美國教授的教學方式。</p><p>她帶走的不只是課堂知識，也更理解世界的多元，學會獨立、自信，並以開放的心態面對世界。</p><p class="voice-attribution">WISCONSIN–MADISON · 大四學姊分享摘要</p></div><img class="voice-photo" src="assets/image13.jpg" alt="Wisconsin–Madison 商學院畢業學姊照片" width="1044" height="1566" loading="lazy"></div>`
 };
@@ -86,30 +86,28 @@ initializeInfiniteMarquee();
 function initializeStudentCarousel(){
  const region=document.querySelector('#kv-carousel');if(!region)return;
  const slides=[...region.querySelectorAll('.kv-slide')],dots=[...region.querySelectorAll('[data-kv-index]')];
- const toggle=region.querySelector('#kv-toggle'),status=region.querySelector('#kv-status');
+ const status=region.querySelector('#kv-status');
  const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
  const hoverCapable=window.matchMedia('(hover: hover)');
- let current=0,requested=0,requestId=0,timer=null,userPaused=motion.matches,hovering=false;
+ let current=0,requested=0,requestId=0,timer=null,imageFailed=false,hovering=false;
  function clearTimer(){if(timer!==null){clearTimeout(timer);timer=null}}
- function syncToggle(){toggle.disabled=motion.matches;toggle.textContent=motion.matches?'手動':userPaused?'播放':'暫停';toggle.setAttribute('aria-label',motion.matches?'已依減少動態設定停用自動輪播':userPaused?'開始自動輪播':'暫停自動輪播')}
- function schedule(){clearTimer();syncToggle();if(!userPaused&&!motion.matches&&!document.hidden&&!hovering)timer=setTimeout(()=>show((current+1)%slides.length,false),8000)}
+ function schedule(){clearTimer();if(!imageFailed&&!motion.matches&&!document.hidden&&!hovering&&!region.contains(document.activeElement))timer=setTimeout(()=>show((current+1)%slides.length,false),5000)}
  async function show(index,manual){
   clearTimer();requested=(index+slides.length)%slides.length;const target=requested,token=++requestId;
-  if(manual){userPaused=true;syncToggle()}
+  if(manual)imageFailed=false;
   const img=slides[target].querySelector('img');
   try{if(img.decode)await img.decode();else if(!img.complete)await new Promise((resolve,reject)=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',reject,{once:true})});if(!img.naturalWidth)throw new Error('Image unavailable')}
-  catch{if(token===requestId){userPaused=true;requested=current;status.textContent='這張照片暫時無法載入，請稍後再試。';schedule()}return}
+  catch{if(token===requestId){imageFailed=true;requested=current;status.textContent='這張照片暫時無法載入，請稍後再試。';schedule()}return}
   if(token!==requestId)return;
   slides.forEach((slide,i)=>{slide.hidden=i!==target;slide.setAttribute('aria-hidden',String(i!==target))});
   dots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===target)));
   current=target;status.textContent=manual?`第${target+1}位，共${slides.length}位：${slides[target].dataset.school}`:'';schedule();
  }
  dots.forEach((dot,i)=>dot.addEventListener('click',()=>show(i,true)));
- toggle.addEventListener('click',()=>{userPaused=!userPaused;if(!userPaused)hovering=false;schedule()});
  region.addEventListener('mouseenter',()=>{if(hoverCapable.matches){hovering=true;clearTimer()}});region.addEventListener('mouseleave',()=>{hovering=false;schedule()});
- region.addEventListener('focusin',event=>{clearTimer();if(event.target!==toggle){userPaused=true;syncToggle()}});region.addEventListener('focusout',event=>{if(!region.contains(event.relatedTarget))schedule()});
+ region.addEventListener('focusin',clearTimer);region.addEventListener('focusout',event=>{if(!region.contains(event.relatedTarget))queueMicrotask(schedule)});
  region.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'){event.preventDefault();show(requested-1,true)}else if(event.key==='ArrowRight'){event.preventDefault();show(requested+1,true)}});
  document.addEventListener('visibilitychange',schedule);
- motion.addEventListener?.('change',()=>{if(motion.matches)userPaused=true;schedule()});schedule();
+ motion.addEventListener?.('change',schedule);schedule();
 }
 initializeStudentCarousel();
